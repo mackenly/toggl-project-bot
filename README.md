@@ -1,7 +1,7 @@
 # toggl-project-bot
 Bot to create new Toggl projects every month
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mackenly/toggl-report-bot/Run%20Tests)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/mackenly/toggl-project-bot/tests.yml?branch=main)
 
 ## Setup
 Configure `wrangler.example.toml` with your correct values. You may need to find some of the Toggl API IDs manually by making requests to the Toggl API (I'd suggest using Postman). Once done, rename `wrangler.example.toml` to `wrangler.toml`.
