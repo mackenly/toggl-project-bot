@@ -1,3 +1,7 @@
+# Cloudflare Workers
+# https://developers.cloudflare.com/workers/
+wrangler.toml
+
 # Logs
 logs
 *.log

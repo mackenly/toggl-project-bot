@@ -1,0 +1,36 @@
+name = "toggl-project-bot"
+main = "src/index.ts"
+compatibility_date = "2023-05-15"
+
+# Cron Triggers
+# Docs: https://developers.cloudflare.com/workers/platform/triggers/cron-triggers/
+# Configuration: https://developers.cloudflare.com/workers/wrangler/configuration/#triggers
+[triggers]
+crons = ["0 0 1 * *"] # Run on the first day of every month at midnight UTC
+
+
+[vars]
+# ID for your Toggl Workspace
+WORKSPACE_IDENTIFIER = 0000000
+
+# Toggle email and password for auth 
+TOGGL_AUTH = "you@example.com:password"
+
+# Project Name separator (ex: "Personal Project | 9/2023") Suggestions: "|", "-", "/"
+PROJECT_NAME_SEPARATOR = "-"
+
+# Project Names (comma separated)
+# Format: "Project Name, Project Name, Project Name"
+PROJECT_NAMES = "Project Name"
+
+# Project Colors (use same order as project names) (this is a premium toggl feature)
+# Format: "#000000, #ffffff, #000000"
+PROJECT_COLORS = "#E36A00"
+
+# Project Clients (use same order as project names)
+# Format: "123456789, 123456789, 123456789"
+PROJECT_CLIENTS = "123456789"
+
+# Premium Toggl Account?
+# Format: true or false
+PREMIUM_ACCOUNT = false
