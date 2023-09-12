@@ -1,22 +1,4 @@
 export interface Env {
-	// Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
-	// MY_KV_NAMESPACE: KVNamespace;
-	//
-	// Example binding to Durable Object. Learn more at https://developers.cloudflare.com/workers/runtime-apis/durable-objects/
-	// MY_DURABLE_OBJECT: DurableObjectNamespace;
-	//
-	// Example binding to R2. Learn more at https://developers.cloudflare.com/workers/runtime-apis/r2/
-	// MY_BUCKET: R2Bucket;
-	//
-	// Example binding to a Service. Learn more at https://developers.cloudflare.com/workers/runtime-apis/service-bindings/
-	// MY_SERVICE: Fetcher;
-	//
-	// Example binding to a Queue. Learn more at https://developers.cloudflare.com/queues/javascript-apis/
-	// MY_QUEUE: Queue;
-	//
-	// Example binding to a D1 Database. Learn more at https://developers.cloudflare.com/workers/platform/bindings/#d1-database-bindings
-	// DB: D1Database
-
 	// Environment variables
 	WORKSPACE_IDENTIFIER: number;
 	TOGGL_AUTH: string;
@@ -66,18 +48,16 @@ interface ErrorResponse {
 type FetchResponse = SuccessResponse | ErrorResponse;
 
 export default {
-	// The scheduled handler is invoked at the interval set in our wrangler.toml's
-	// [[triggers]] configuration.
+	/**
+	 * scheduled - Handle the scheduled event - Docs https://developers.cloudflare.com/workers/runtime-apis/scheduled-event/#docs-content
+	 * @param event The event object
+	 * @param env Environment variables - uses the Env interface
+	 * @param ctx Execution context
+	 */
 	async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
-		// A Cron Trigger can make requests to other endpoints on the Internet,
-		// publish to a Queue, query a D1 Database, and much more.
-		//
-		// We'll keep it simple and make an API call to a Cloudflare API:
 		let resp = await handleRequest(env, ctx);
 		let wasSuccessful = resp.ok ? 'success' : 'fail';
 
-		// You could store this result in KV, write to a D1 Database, or publish to a Queue.
-		// In this template, we'll just log the result:
 		console.log(`trigger fired at ${event.cron}: ${wasSuccessful}`);
 	},
 	// Fetch for testing
@@ -237,7 +217,7 @@ async function createProject(env: Env, {
  * @returns string formatted project name
  * @example nameBuilder(' Example Project', new Date(), { PROJECT_NAME_SEPARATOR: '-' }) // 'Example Project - 1/2021'
  */
-function nameBuilder(name: string, date: Date, env: Env) {
+export function nameBuilder(name: string, date: Date, env: Env) {
 	return `${name.trim()} ${env.PROJECT_NAME_SEPARATOR.trim()} ${date.getMonth() + 1}/${date.getFullYear()}`
 }
 
@@ -247,6 +227,6 @@ function nameBuilder(name: string, date: Date, env: Env) {
  * @returns Array<string> of strings
  * @example commaSeparatedStringToArray('a, b, c') // ['a', 'b', 'c']
  */
-function commaSeparatedStringToArray(str: string) {
+export function commaSeparatedStringToArray(str: string) {
 	return str.split(',').map(item => item.trim());
 }
