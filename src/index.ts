@@ -64,7 +64,7 @@ export default {
 		console.log(`trigger fired at ${event.cron}: ${wasSuccessful}`);
 	},
 	// Fetch for testing
-	fetch(request: Request, env: Env, ctx: ExecutionContext): Response | Promise<Response> {
+	/*fetch(request: Request, env: Env, ctx: ExecutionContext): Response | Promise<Response> {
 		// The fetch handler is invoked whenever the worker receives an HTTP request.
 		// Learn more about Fetch Events at https://developers.cloudflare.com/workers/runtime-apis/fetch-event
 		
@@ -74,7 +74,7 @@ export default {
 		}
 
 		return handleRequest(env, ctx);
-	}
+	}*/
 };
 
 /**
