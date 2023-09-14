@@ -32,6 +32,7 @@ test('nameBuilder builds project name correctly', () => {
         PROJECT_NAMES: 'dummyProjectNames',
         PROJECT_COLORS: 'dummyProjectColors',
         PROJECT_CLIENTS: 'dummyProjectClients',
+        PROJECT_ESTIMATES: 'dummyProjectEstimates',
         PREMIUM_ACCOUNT: true,
     }
     const expected = 'Example Project - 1/2022'
@@ -49,6 +50,7 @@ test('nameBuilder removes excess spaces from project name', () => {
         PROJECT_NAMES: 'dummyProjectNames',
         PROJECT_COLORS: 'dummyProjectColors',
         PROJECT_CLIENTS: 'dummyProjectClients',
+        PROJECT_ESTIMATES: 'dummyProjectEstimates',
         PREMIUM_ACCOUNT: true,
     }
     const expected = 'Example Project + 1/2022'
