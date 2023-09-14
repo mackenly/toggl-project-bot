@@ -6,6 +6,7 @@ export interface Env {
 	PROJECT_NAMES: string;
 	PROJECT_COLORS: string;
 	PROJECT_CLIENTS: string;
+	PROJECT_ESTIMATES: string;
 	PREMIUM_ACCOUNT: boolean;
 }
 
@@ -16,6 +17,7 @@ interface RequestBody {
 	billable?: boolean,
 	client_id?: number,
 	color?: string,
+	estimated_hours?: number,
 	start_date?: string,
 	end_date?: string,
 	name: string
@@ -29,6 +31,7 @@ interface Project {
 	billable?: boolean,
 	client_id?: number,
 	color?: string,
+	estimated_hours?: string,
 	start_date?: string,
 	end_date?: string,
 	name: string
@@ -61,7 +64,7 @@ export default {
 		console.log(`trigger fired at ${event.cron}: ${wasSuccessful}`);
 	},
 	// Fetch for testing
-	/*fetch(request: Request, env: Env, ctx: ExecutionContext): Response | Promise<Response> {
+	fetch(request: Request, env: Env, ctx: ExecutionContext): Response | Promise<Response> {
 		// The fetch handler is invoked whenever the worker receives an HTTP request.
 		// Learn more about Fetch Events at https://developers.cloudflare.com/workers/runtime-apis/fetch-event
 		
@@ -71,7 +74,7 @@ export default {
 		}
 
 		return handleRequest(env, ctx);
-	}*/
+	}
 };
 
 /**
@@ -86,6 +89,7 @@ async function handleRequest(env: Env, ctx: ExecutionContext): Promise<Response>
 	const projects: Array<string> = commaSeparatedStringToArray(env.PROJECT_NAMES);
 	const colors: Array<string> = commaSeparatedStringToArray(env.PROJECT_COLORS);
 	const clients: Array<string> = commaSeparatedStringToArray(env.PROJECT_CLIENTS);
+	const estimates: Array<string> = commaSeparatedStringToArray(env.PROJECT_ESTIMATES);
 
 	if (projects.length !== colors.length) {
 		console.log('The number of projects and colors must match');
@@ -97,6 +101,11 @@ async function handleRequest(env: Env, ctx: ExecutionContext): Promise<Response>
 		return new Response('The number of projects and clients must match', { status: 500 });
 	}
 
+	if (projects.length !== estimates.length) {
+		console.log('The number of projects and estimates must match');
+		return new Response('The number of projects and estimates must match', { status: 500 });
+	}
+
 	let errors: Array<string> = [];
 
 	projects.forEach(async (project, index) => {
@@ -104,6 +113,7 @@ async function handleRequest(env: Env, ctx: ExecutionContext): Promise<Response>
 			workspace_id: env.WORKSPACE_IDENTIFIER,
 			active: true,
 			auto_estimates: false,
+			estimated_hours: estimates[index],
 			billable: false,
 			client_id: parseInt(clients[index]),
 			color: colors[index],
@@ -145,6 +155,7 @@ async function createProject(env: Env, {
 	workspace_id,
 	active = true,
 	auto_estimates = false,
+	estimated_hours = "",
 	billable = false,
 	client_id,
 	color = "#000000",
@@ -166,6 +177,10 @@ async function createProject(env: Env, {
 
 	if (end_date) {
 		body.end_date = end_date;
+	}
+
+	if (estimated_hours && estimated_hours != "none" && !isNaN(parseInt(estimated_hours))) {
+		body.estimated_hours = parseInt(estimated_hours);
 	}
 
 	if (env.PREMIUM_ACCOUNT) {

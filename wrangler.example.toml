@@ -31,6 +31,10 @@ PROJECT_COLORS = "#E36A00"
 # Format: "123456789, 123456789, 123456789"
 PROJECT_CLIENTS = "123456789"
 
+# Project Estimates (use same order as project names) (none to skip)
+# Format: "10, none, 5"
+PROJECT_ESTIMATES = "10"
+
 # Premium Toggl Account?
 # Format: true or false
 PREMIUM_ACCOUNT = false
