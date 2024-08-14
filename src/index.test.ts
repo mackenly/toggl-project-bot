@@ -1,4 +1,4 @@
-import { test, expect } from 'vitest';
+import { test, expect, describe, it } from 'vitest';
 import { Env, commaSeparatedStringToArray, nameBuilder } from '../src/index'
 
 const defaultEnv: Partial<Env> = {
@@ -12,27 +12,28 @@ const defaultEnv: Partial<Env> = {
     PREMIUM_ACCOUNT: true,
 };
 
+describe('commaSeparatedStringToArray', () => {
+    it('should converts comma separated string to array', () => {
+        const str = 'a, b, c';
+        const expected = ['a', 'b', 'c'];
+        const result = commaSeparatedStringToArray(str);
+        expect(result).toEqual(expected);
+    });
 
-test('commaSeparatedStringToArray converts comma separated string to array', () => {
-    const str = 'a, b, c'
-    const expected = ['a', 'b', 'c']
-    const result = commaSeparatedStringToArray(str)
-    expect(result).toEqual(expected)
-})
+    it('should converts a single value to an array', () => {
+        const str = 'a';
+        const expected = ['a'];
+        const result = commaSeparatedStringToArray(str);
+        expect(result).toEqual(expected);
+    });
 
-test('commaSeparatedStringToArray converts a single value to an array', () => {
-    const str = 'a'
-    const expected = ['a']
-    const result = commaSeparatedStringToArray(str)
-    expect(result).toEqual(expected)
-})
-
-test('commaSeparatedStringToArray trims spaces around values', () => {
-    const str = ' a     ,  b,    c '
-    const expected = ['a', 'b', 'c']
-    const result = commaSeparatedStringToArray(str)
-    expect(result).toEqual(expected)
-})
+    it('should trims spaces around values', () => {
+        const str = ' a     ,  b,    c ';
+        const expected = ['a', 'b', 'c'];
+        const result = commaSeparatedStringToArray(str);
+        expect(result).toEqual(expected);
+    });
+});
 
 test('nameBuilder builds project name correctly', () => {
     const name = 'Example Project'
