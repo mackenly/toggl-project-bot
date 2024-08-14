@@ -13,9 +13,6 @@ crons = ["0 0 1 * *"] # Run on the first day of every month at midnight UTC
 # ID for your Toggl Workspace
 WORKSPACE_IDENTIFIER = 0000000
 
-# Toggle email and password for auth 
-TOGGL_AUTH = "you@example.com:password"
-
 # Project Name separator (ex: "Personal Project | 9/2023") Suggestions: "|", "-", "/"
 PROJECT_NAME_SEPARATOR = "-"
 

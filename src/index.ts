@@ -1,7 +1,7 @@
 export interface Env {
 	// Environment variables
 	WORKSPACE_IDENTIFIER: number;
-	TOGGL_AUTH: string;
+	TOGGL_AUTH: string; // this is a secret
 	PROJECT_NAME_SEPARATOR: string;
 	PROJECT_NAMES: string;
 	PROJECT_COLORS: string;
@@ -63,18 +63,6 @@ export default {
 
 		console.log(`trigger fired at ${event.cron}: ${wasSuccessful}`);
 	},
-	// Fetch for testing
-	/*fetch(request: Request, env: Env, ctx: ExecutionContext): Response | Promise<Response> {
-		// The fetch handler is invoked whenever the worker receives an HTTP request.
-		// Learn more about Fetch Events at https://developers.cloudflare.com/workers/runtime-apis/fetch-event
-		
-		// if for favicon, return 404
-		if (request.url.endsWith('favicon.ico')) {
-			return new Response('Not found', { status: 404 });
-		}
-
-		return handleRequest(env, ctx);
-	}*/
 };
 
 /**
@@ -91,18 +79,23 @@ async function handleRequest(env: Env, ctx: ExecutionContext): Promise<Response>
 	const clients: Array<string> = commaSeparatedStringToArray(env.PROJECT_CLIENTS);
 	const estimates: Array<string> = commaSeparatedStringToArray(env.PROJECT_ESTIMATES);
 
+	if (!env.TOGGL_AUTH) {
+		console.error('TOGGL_AUTH is not set');
+		return new Response('TOGGL_AUTH is not set', { status: 500 });
+	}
+
 	if (projects.length !== colors.length) {
-		console.log('The number of projects and colors must match');
+		console.error('The number of projects and colors must match');
 		return new Response('The number of projects and colors must match', { status: 500 });
 	}
 
 	if (projects.length !== clients.length) {
-		console.log('The number of projects and clients must match');
+		console.error('The number of projects and clients must match');
 		return new Response('The number of projects and clients must match', { status: 500 });
 	}
 
 	if (projects.length !== estimates.length) {
-		console.log('The number of projects and estimates must match');
+		console.error('The number of projects and estimates must match');
 		return new Response('The number of projects and estimates must match', { status: 500 });
 	}
 
@@ -126,6 +119,7 @@ async function handleRequest(env: Env, ctx: ExecutionContext): Promise<Response>
 	});
 
 	if (errors.length > 0) {
+		console.error(errors.join(', '));
 		return new Response(errors.join(', '), { status: 500 });
 	}
 

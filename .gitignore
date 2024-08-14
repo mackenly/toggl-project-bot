@@ -1,6 +1,8 @@
 # Cloudflare Workers
 # https://developers.cloudflare.com/workers/
 wrangler.toml
+/.wrangler
+.dev.vars
 
 # Logs
 logs
