@@ -1,5 +1,5 @@
 # Toggl Project Bot Automation
-CRON bot to create new Toggl projects every month using a Cloudflare Worker.
+CRON bot that creates new Toggl projects every month using a Cloudflare Worker.
 
 ![GitHub CI Workflow Status](https://img.shields.io/github/actions/workflow/status/mackenly/toggl-project-bot/ci.yml?branch=main&label=CI)
 ![GitHub CD Workflow Status](https://img.shields.io/github/actions/workflow/status/mackenly/toggl-project-bot/cd.yml?branch=main&label=CD)
