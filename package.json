@@ -2,6 +2,7 @@
   "name": "toggl-project-bot",
   "version": "0.0.0",
   "private": true,
+  "license": "GPL-3.0-only",
   "scripts": {
     "deploy": "wrangler deploy",
     "start": "wrangler dev",
