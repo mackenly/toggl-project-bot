@@ -1,6 +1,6 @@
 {
   "name": "toggl-project-bot",
-  "version": "0.0.99",
+  "version": "0.0.100",
   "private": true,
   "license": "GPL-3.0-only",
   "scripts": {
